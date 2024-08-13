@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\emailverify;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -27,10 +31,23 @@ class UserController extends Controller
         $otpnumber=rand(100000,999999);
         $insert=$request->validate([
             'name'=>'required',
-            'passwored'=>"'required'|'comfirmed'|'min:6'",
+            'password'=>'required|confirmed|min:6',
             'email'=>['required',Rule::unique('users','email')],
         ]);
         $insert['password']=bcrypt($insert['password']);
-        
+        $insert['otp']=$otpnumber;
+        $user=User::create($insert);
+        Auth::login($user);
+        Mail::to($user->email)->send(new emailverify($user));
+        return redirect('/otp')->with('message','User is already register');
+    }
+
+    public function Checkotp(Request $request){
+        $verify=User::where('email','=',Auth::user()->email);
+        $getotp=$verify->get();
+        if ($getotp[0]->otp === $request['otp']) {
+            $verify->update(array('otp_time'=>'1'));
+            return redirect()->route('login')->with('message','the otp is correct you can login now');
+        }
     }
 }

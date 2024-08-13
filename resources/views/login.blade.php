@@ -7,7 +7,7 @@
     <title>Login</title>
 </head>
 <body>
-    <form action="login" method="POST">
+    <form action="/login" method="POST">
         <h1>Login Page</h1>
         <label for="user">Username</label><br>
         <input type="text" name="name" placeholder="Enter Your Username"><br>
