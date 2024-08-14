@@ -1,3 +1,9 @@
+@extends('header')
+@section('content')
+@session('message')
+    <script>
+        window.alert('{{ session("message") }}')
+    </script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +13,7 @@
     <title>Main</title>
 </head>
 <body>
-    <h1>Main Page</h1>
 </body>
 </html>
+@endsession
+@endsection

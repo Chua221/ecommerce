@@ -50,4 +50,22 @@ class UserController extends Controller
             return redirect()->route('login')->with('message','the otp is correct you can login now');
         }
     }
+
+    public function LoginFunction(Request $request){
+        $select=$request->validate([
+            'email'=>'required',
+            'password'=>'required|min:6'
+        ]);
+        if (Auth::attempt($select)) {
+            $request->session()->regenerate();
+            return redirect('/')->with('message','Login successful');
+        }
+    }
+
+    public function LogoutFunction(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/')->with('message','Logout successful');
+    }
 }

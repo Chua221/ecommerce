@@ -1,3 +1,8 @@
+@session('message')
+    <script>
+        window.alert('{{ session("message") }}')
+    </script>
+@endsession
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,13 +13,12 @@
 </head>
 <body>
     <form action="/login" method="POST">
+        @csrf
         <h1>Login Page</h1>
-        <label for="user">Username</label><br>
-        <input type="text" name="name" placeholder="Enter Your Username"><br>
-        <label for="pass">Password</label><br>
-        <input type="password" name="password" placeholder="Enter Your Password"><br>
         <label for="email">Email</label><br>
         <input type="email" name="email" placeholder="Enter Your Email"><br>
+        <label for="pass">Password</label><br>
+        <input type="password" name="password" placeholder="Enter Your Password"><br>
         <input type="submit">
     </form>
 </body>
