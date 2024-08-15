@@ -8,8 +8,10 @@ Route::controller(UserController::class)->group(function(){
     Route::get('/login','ViewLogin')->name('login');
     Route::get('/register','ViewRegister');
     Route::get('/otp','ViewOtp');
+    Route::get('/add','ViewAdd');
     Route::post('/register','RegisterFunction');
     Route::post('/otp_verify','Checkotp');
     Route::post('/login','LoginFunction');
     Route::post('/logout','LogoutFunction')->name('logout');
+    Route::post('/add','AddFunction');
 });

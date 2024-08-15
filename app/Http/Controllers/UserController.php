@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\emailverify;
 use App\Models\User;
+use App\Models\vegetables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -12,7 +13,9 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
     public function ViewMain(){
-        return view('main');
+        return view('main',[
+            'showdata'=>vegetables::all()
+        ]);
     }
 
     public function ViewLogin(){
@@ -25,6 +28,10 @@ class UserController extends Controller
 
     public function ViewOtp(){
         return view('otp');
+    }
+
+    public function ViewAdd(){
+        return view('addvegetable');
     }
 
     public function RegisterFunction(Request $request){
@@ -67,5 +74,19 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/')->with('message','Logout successful');
+    }
+
+    public function AddFunction(Request $request){
+        $add=$request->validate([
+            'v_name'=>'required',
+            'image'=>'required',
+            'mess'=>'required',
+            'price'=>'required',
+        ]);
+        if ($request->hasFile('image')) {
+            $add['image']=$request->file('image')->store('logos','public');
+        }
+        vegetables::create($add);
+        return redirect('/')->with('message','The vegetable is already added');
     }
 }
