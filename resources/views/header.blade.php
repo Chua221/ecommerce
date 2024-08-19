@@ -53,7 +53,7 @@
         <h1><a href="/" style="color:white;">Main Page</a></h1>
         <nav>
             @auth
-                <a href="/profile">{{ auth()->user()->name }}</a>
+                <a href="{{ route('profile',['id'=>auth()->user()->id]) }}">{{ auth()->user()->name }}</a>
                 <form action="{{ route('logout') }}" method="POST" style="display:inline;">
                     @csrf
                     <button type="submit">Logout</button>

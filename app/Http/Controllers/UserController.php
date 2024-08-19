@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\emailverify;
+use App\Models\address;
 use App\Models\User;
 use App\Models\vegetables;
 use Illuminate\Http\Request;
@@ -36,6 +37,16 @@ class UserController extends Controller
 
     public function ViewProfile(){
         return view('profile');
+    }
+
+    public function ViewAddress(){
+        return view('address',[
+            'addressdata'=>address::where('user_id','=',Auth::user()->id)->get()
+        ]);
+    }
+
+    public function ViewAddAddress(){
+        return view('addaddress');
     }
 
     public function RegisterFunction(Request $request){
@@ -92,5 +103,27 @@ class UserController extends Controller
         }
         vegetables::create($add);
         return redirect('/')->with('message','The vegetable is already added');
+    }
+
+    public function CompleteProfile(Request $request){
+        $profile=$request->validate([
+            'no_ic'=>'required',
+            'gender'=>'required',
+        ]);
+        User::where('id','=',Auth::user()->id)->update($profile);
+        return redirect('/')->with('message','Profile is already changed');
+    }
+
+    public function AddAddressFunction(Request $request){
+        $newaddress=$request->validate([
+            'adress1'=>'required',
+            'adress2'=>'required',
+            'poscode'=>'required|min:5',
+            'city'=>'required',
+            'state'=>'required',
+        ]);
+        $newaddress['user_id']=Auth::user()->id;
+        address::create($newaddress);
+        return redirect('/')->with('message','New address is already create');
     }
 }
