@@ -34,6 +34,10 @@ class UserController extends Controller
         return view('addvegetable');
     }
 
+    public function ViewProfile(){
+        return view('profile');
+    }
+
     public function RegisterFunction(Request $request){
         $otpnumber=rand(100000,999999);
         $insert=$request->validate([

@@ -17,8 +17,14 @@
         <h1>Login Page</h1>
         <label for="email">Email</label><br>
         <input type="email" name="email" placeholder="Enter Your Email"><br>
+        @error('email')
+            <p>{{ $message }}</p>
+        @enderror
         <label for="pass">Password</label><br>
         <input type="password" name="password" placeholder="Enter Your Password"><br>
+        @error('password')
+            <p>{{ $message }}</p>
+        @enderror
         <input type="submit">
     </form>
 </body>

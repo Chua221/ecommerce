@@ -7,8 +7,9 @@ Route::controller(UserController::class)->group(function(){
     Route::get('/','ViewMain');
     Route::get('/login','ViewLogin')->name('login');
     Route::get('/register','ViewRegister');
-    Route::get('/otp','ViewOtp');
+    Route::get('/otp','ViewOtp');   
     Route::get('/add','ViewAdd');
+    Route::get('/profile','ViewProfile');
     Route::post('/register','RegisterFunction');
     Route::post('/otp_verify','Checkotp');
     Route::post('/login','LoginFunction');
