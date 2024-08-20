@@ -6,62 +6,107 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #f06, #4a90e2);
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        form {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 400px;
-            width: 100%;
-            color: #333;
-        }
+body {
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
 
-        label {
-            font-size: 16px;
-            color: #555;
-        }
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
 
-        input[type="number"], select, input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0 20px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
 
-        button {
-            background-color: #4a90e2;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
 
-        button:hover {
-            background-color: #357ab7;
-        }
+input[type="text"], select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #555;
+}
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #4a90e2;
-        }
+input[type="text"]::placeholder {
+    color: #999;
+}
+
+select {
+    color: #555;
+    background-color: #fff;
+}
+
+button[type="submit"], button[type="button"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"] {
+    background-color: #8dd2f7;
+    color: white;
+}
+
+button[type="button"] {
+    background-color: #585757;
+    color: white;
+    margin-top: 15px;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    form {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    input[type="text"], select, button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -76,7 +121,7 @@
             <option value="male">Male</option>
             <option value="female">Female</option>
         </select>
-        <a href="{{ route('adress',['id'=>auth()->user()->id]) }}"><button type="button">View Adress</button></a>
+        <a href="{{ route('adress') }}"><button type="button">View Adress</button></a>
         <button type="submit">Submit</button>
     </form>
 </body>

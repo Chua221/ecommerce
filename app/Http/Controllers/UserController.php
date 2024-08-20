@@ -49,6 +49,10 @@ class UserController extends Controller
         return view('addaddress');
     }
 
+    public function ViewEdit(){
+        return view('editaddress');
+    }
+
     public function RegisterFunction(Request $request){
         $otpnumber=rand(100000,999999);
         $insert=$request->validate([
@@ -124,6 +128,11 @@ class UserController extends Controller
         ]);
         $newaddress['user_id']=Auth::user()->id;
         address::create($newaddress);
-        return redirect('/')->with('message','New address is already create');
+        return redirect('/adress')->with('message','New address is already create');
+    }
+
+    public function DeleteFunction(Request $request,address $id){
+        $id->delete();
+        return back()->with('message','delete successful'); 
     }
 }

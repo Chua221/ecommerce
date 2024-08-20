@@ -55,7 +55,7 @@ table {
 
 /* Table Header Styles */
 th {
-    background-color: #4CAF50;
+    background-color: #343a40;
     color: white;
     padding: 10px;
     text-align: left;

@@ -10,7 +10,8 @@ Route::controller(UserController::class)->group(function(){
     Route::get('/otp','ViewOtp');   
     Route::get('/add','ViewAdd');
     Route::get('/profile/{id}','ViewProfile')->name('profile');
-    Route::get('/adress/{id}','ViewAddress')->name('adress');
+    Route::get('/adress','ViewAddress')->name('adress');
+    Route::get('/edit/{id}','ViewEdit')->name('edit');
     Route::get('/addadress/{id}','ViewAddAddress')->name('addadress');
     Route::post('/register','RegisterFunction');
     Route::post('/otp_verify','Checkotp');
@@ -19,4 +20,5 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/add','AddFunction');
     Route::post('/profile','CompleteProfile');
     Route::post('/adress','AddAddressFunction');
+    Route::delete('/delete/{id}','DeleteFunction')->name('delete');
 });
