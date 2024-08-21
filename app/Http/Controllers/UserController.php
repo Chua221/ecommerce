@@ -135,4 +135,15 @@ class UserController extends Controller
         $id->delete();
         return back()->with('message','delete successful'); 
     }
+
+    public function EditFunction(Request $request,address $addressid){
+        $editaddress=$request->validate([
+            'adress1'=>'required',
+            'adress2'=>'required',
+            'poscode'=>'required|min:5',
+            'city'=>'required',
+            'state'=>'required',
+        ]);
+        
+    }
 }
