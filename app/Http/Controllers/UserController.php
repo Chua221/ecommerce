@@ -49,8 +49,10 @@ class UserController extends Controller
         return view('addaddress');
     }
 
-    public function ViewEdit(){
-        return view('editaddress');
+    public function ViewEdit($id){
+        return view('editaddress',[
+        'editaddress'=>address::find($id)
+        ]);
     }
 
     public function RegisterFunction(Request $request){
@@ -120,6 +122,7 @@ class UserController extends Controller
 
     public function AddAddressFunction(Request $request){
         $newaddress=$request->validate([
+            'home'=>'required',
             'adress1'=>'required',
             'adress2'=>'required',
             'poscode'=>'required|min:5',
@@ -136,14 +139,16 @@ class UserController extends Controller
         return back()->with('message','delete successful'); 
     }
 
-    public function EditFunction(Request $request,address $addressid){
+    public function EditFunction(Request $request,address $id){
         $editaddress=$request->validate([
+            'home'=>'required',
             'adress1'=>'required',
             'adress2'=>'required',
             'poscode'=>'required|min:5',
             'city'=>'required',
             'state'=>'required',
         ]);
-        
+            $id->update($editaddress);
+            return redirect('/adress')->with('message','Edit address successful');
     }
 }

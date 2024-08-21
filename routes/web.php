@@ -21,5 +21,5 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/profile','CompleteProfile');
     Route::post('/adress','AddAddressFunction');
     Route::delete('/delete/{id}','DeleteFunction')->name('delete');
-    Route::post('/edit','EditFunction');
+    Route::post('/edit/{id}','EditFunction')->name('edit');
 });

@@ -1,3 +1,8 @@
+@session('message')
+    <script>
+        window.alert('{{ session("message") }}')
+    </script>
+@endsession
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,6 +111,7 @@
         .address-actions button[type="submit"] {
             background: linear-gradient(135deg, #ff5f6d, #ffc371);
             color: white;
+            margin-top: 17px; /* 添加的行，用于将 Delete 按钮下移 */
         }
 
         .address-actions button:hover {
@@ -145,15 +151,19 @@
         @foreach ($addressdata as $item)
         <div class="address-box">
             <div class="address-info">
-                <label><i class="fas fa-home"></i> Address 1:</label>
+                <label><i class="fas fa-home"></i> Home Name:</label>
+                <span>{{ $item['home'] }}</span>
+            </div>
+            <div class="address-info">
+                <label><i class="fas fa-map-marker-alt"></i> Address 1:</label>
                 <span>{{ $item['adress1'] }}</span>
             </div>
             <div class="address-info">
-                <label><i class="fas fa-map-marker-alt"></i> Address 2:</label>
+                <label><i class="fas fa-map-pin"></i> Address 2:</label>
                 <span>{{ $item['adress2'] }}</span>
             </div>
             <div class="address-info">
-                <label><i class="fas fa-envelope"></i> Postcode:</label>
+                <label><i class="fas fa-envelope-open"></i> Postcode:</label>
                 <span>{{ $item['poscode'] }}</span>
             </div>
             <div class="address-info">
@@ -161,7 +171,7 @@
                 <span>{{ $item['city'] }}</span>
             </div>
             <div class="address-info">
-                <label><i class="fas fa-map"></i> State:</label>
+                <label><i class="fas fa-map-signs"></i> State:</label>
                 <span>{{ $item['state'] }}</span>
             </div>
             <div class="address-actions">

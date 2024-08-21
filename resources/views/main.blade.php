@@ -1,10 +1,10 @@
 @extends('header')
 @section('content')
-@session('message')
+@if(session('message'))
     <script>
         window.alert('{{ session("message") }}')
     </script>
-@endsession
+@endif
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,67 +14,97 @@
     <title>Main</title>
 </head>
 <body>
-    <table border>
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Mess</th>
-            <th>Price</th>
-        </tr>
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach ($showdata as $item)
-        <tr>
-                <td><img src="{{ $item->image ? asset("storage/".$item->image) : asset('storage/5pIFjRpbjPAtClETuLg2iAiJ2HnYLmGBvW1wbnTM.jpg') }}"></td>
+            <tr>
+                <td><img src="{{ $item->image ? asset("storage/".$item->image) : asset('storage/5pIFjRpbjPAtClETuLg2iAiJ2HnYLmGBvW1wbnTM.jpg') }}" alt="Image of {{ $item['v_name'] }}"></td>
                 <td>{{ $item['v_name'] }}</td>
                 <td>{{ $item['mess'] }}</td>
                 <td>{{ $item['price'] }}</td>
-        </tr>
+            </tr>
             @endforeach
+        </tbody>
     </table>
 </body>
 </html>
 @endsection
 
 <style>
-    /* Styles for the entire page */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #e9ecef;
+    color: #343a40;
 }
 
-/* Table Styles */
 table {
-    width: 80%;
-    margin: 20px auto;
+    width: 90%;
+    margin: 30px auto;
     border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
 }
 
-/* Table Header Styles */
-th {
-    background-color: #343a40;
+thead {
+    background-color: #5e6163;
     color: white;
-    padding: 10px;
+}
+
+th, td {
+    padding: 15px;
     text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+th {
     font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 1px;
 }
 
-/* Table Data Cell Styles */
 td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    text-align: center;
+    font-size: 16px;
 }
 
-/* Image Styles */
-td img {
-    max-width: 100px;
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+img {
+    max-width: 120px;
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s;
 }
 
+img:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    img {
+        max-width: 80px;
+    }
+}
 </style>

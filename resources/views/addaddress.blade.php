@@ -104,11 +104,17 @@
     </style>
 </head>
 <body>
-    <form action="/address" method="POST">
+    <form action="/adress" method="POST">
         @csrf
         <h2>Add Address</h2>
+        <label for="home">Home Name</label>
+        <input type="text" name="home" id="home" placeholder="Enter Your Home Name">
+        @error('home')
+            <p>{{ $message }}</p>
+        @enderror
+
         <label for="adress1">Address 1</label>
-        <input type="text" name="adress1" id="adress1" placeholder="Enter Your Address 1" required>
+        <input type="text" name="adress1" id="adress1" placeholder="Enter Your Address 1" >
         @error('adress1')
             <p>{{ $message }}</p>
         @enderror
@@ -120,19 +126,19 @@
         @enderror
         
         <label for="poscode">Postcode</label>
-        <input type="text" name="poscode" id="poscode" placeholder="Enter Your Postcode" required>
+        <input type="text" name="poscode" id="poscode" placeholder="Enter Your Postcode" >
         @error('poscode')
             <p>{{ $message }}</p>
         @enderror
         
         <label for="city">City</label>
-        <input type="text" name="city" id="city" placeholder="Enter Your City" required>
+        <input type="text" name="city" id="city" placeholder="Enter Your City" >
         @error('city')
             <p>{{ $message }}</p>
         @enderror
         
         <label for="state">State</label>
-        <input type="text" name="state" id="state" placeholder="Enter Your State" required>
+        <input type="text" name="state" id="state" placeholder="Enter Your State" >
         @error('state')
             <p>{{ $message }}</p>
         @enderror

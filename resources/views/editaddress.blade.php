@@ -104,35 +104,41 @@
     </style>
 </head>
 <body>
-    <form action="edit" method="POST">
+    <form action="{{ route('edit',['id'=>$editaddress->id]) }}" method="POST">
         @csrf
         <h2>Edit Address</h2>
+        <label for="home">Home Name</label>
+        <input type="text" name="home" id="home" placeholder="Enter Your Home Name"  value="{{ $editaddress['home'] }}" required>
+        @error('home')
+            <p>{{ $message }}</p>
+        @enderror
+        
         <label for="adress1">Address 1</label>
-        <input type="text" name="adress1" id="adress1" placeholder="Enter Your Address 1" required>
+        <input type="text" name="adress1" id="adress1" placeholder="Enter Your Address 1"  value="{{ $editaddress['adress1'] }}" required>
         @error('adress1')
             <p>{{ $message }}</p>
         @enderror
         
         <label for="adress2">Address 2</label>
-        <input type="text" name="adress2" id="adress2" placeholder="Enter Your Address 2">
+        <input type="text" name="adress2" id="adress2" placeholder="Enter Your Address 2" value="{{ $editaddress['adress2'] }}" required>
         @error('adress2')
             <p>{{ $message }}</p>
         @enderror
         
         <label for="poscode">Postcode</label>
-        <input type="text" name="poscode" id="poscode" placeholder="Enter Your Postcode" required>
+        <input type="text" name="poscode" id="poscode" placeholder="Enter Your Postcode" value="{{ $editaddress['poscode'] }}" required>
         @error('poscode')
             <p>{{ $message }}</p>
         @enderror
         
-        <label for="city">City</label>
-        <input type="text" name="city" id="city" placeholder="Enter Your City" required>
+         <label for="city">City</label>
+        <input type="text" name="city" id="city" placeholder="Enter Your City" value="{{ $editaddress['city'] }}" required>
         @error('city')
             <p>{{ $message }}</p>
         @enderror
         
         <label for="state">State</label>
-        <input type="text" name="state" id="state" placeholder="Enter Your State" required>
+        <input type="text" name="state" id="state" placeholder="Enter Your State" value="{{ $editaddress['state'] }}" required>
         @error('state')
             <p>{{ $message }}</p>
         @enderror
