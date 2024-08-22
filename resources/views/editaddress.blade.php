@@ -104,7 +104,7 @@
     </style>
 </head>
 <body>
-    <form action="{{ route('edit',['id'=>$editaddress->id]) }}" method="POST">
+    <form action="{{ route('edited',['id'=>$editaddress->id]) }}" method="POST">
         @csrf
         <h2>Edit Address</h2>
         <label for="home">Home Name</label>

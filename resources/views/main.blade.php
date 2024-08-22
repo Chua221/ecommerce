@@ -21,6 +21,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
+                <th colspan="2">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -28,8 +29,17 @@
             <tr>
                 <td><img src="{{ $item->image ? asset("storage/".$item->image) : asset('storage/5pIFjRpbjPAtClETuLg2iAiJ2HnYLmGBvW1wbnTM.jpg') }}" alt="Image of {{ $item['v_name'] }}"></td>
                 <td>{{ $item['v_name'] }}</td>
-                <td>{{ $item['mess'] }}</td>
-                <td>{{ $item['price'] }}</td>
+                <td>{{ $item['mass'] }}</td>
+                <td>RM{{ $item['price'] }}</td>
+                <td class="action-column">
+                    <div class="action-buttons">
+                        <a href="{{ route('viewveg',['id'=>$item['id']]) }}"><button type="button">View Vegetable</button></a>
+                        <form action="{{ route('carts',['id'=>$item['id']]) }}" method="POST">
+                            @csrf 
+                            <button type="button">Add to cart</button>
+                        </form>
+                    </div>
+                </td>
             </tr>
             @endforeach
         </tbody>
@@ -64,7 +74,7 @@ thead {
 
 th, td {
     padding: 15px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #dee2e6;
 }
 
@@ -76,6 +86,10 @@ th {
 
 td {
     font-size: 16px;
+}
+
+td.action-column {
+    padding: 10px; /* 为Action列设置更小的padding */
 }
 
 tbody tr:hover {
@@ -93,6 +107,26 @@ img:hover {
     transform: scale(1.1);
 }
 
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+button[type="button"] {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover[type="button"] {
+    background: linear-gradient(45deg, #0056b3, #003d7a);
+}
+
 @media (max-width: 768px) {
     table {
         width: 100%;
@@ -105,6 +139,11 @@ img:hover {
 
     img {
         max-width: 80px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 5px;
     }
 }
 </style>

@@ -12,7 +12,9 @@ Route::controller(UserController::class)->group(function(){
     Route::get('/profile/{id}','ViewProfile')->name('profile');
     Route::get('/adress','ViewAddress')->name('adress');
     Route::get('/edit/{id}','ViewEdit')->name('edit');
+    Route::get('/cart','ViewCart')->name('cart');
     Route::get('/addadress/{id}','ViewAddAddress')->name('addadress');
+    Route::get('/viewveg/{id}','ViewVeg')->name('viewveg');
     Route::post('/register','RegisterFunction');
     Route::post('/otp_verify','Checkotp');
     Route::post('/login','LoginFunction');
@@ -21,5 +23,6 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/profile','CompleteProfile');
     Route::post('/adress','AddAddressFunction');
     Route::delete('/delete/{id}','DeleteFunction')->name('delete');
-    Route::post('/edit/{id}','EditFunction')->name('edit');
+    Route::post('/edited/{id}','EditFunction')->name('edited');
+    Route::post('/carts/{id}','AddToCartFunction')->name('carts');
 });

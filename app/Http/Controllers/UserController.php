@@ -55,6 +55,16 @@ class UserController extends Controller
         ]);
     }
 
+    public function ViewCart(){
+        return view('cart');
+    }
+
+    public function ViewVeg($id){
+        return view('vegetable',[
+            'vegetable'=>vegetables::find($id)
+        ]);
+    }
+
     public function RegisterFunction(Request $request){
         $otpnumber=rand(100000,999999);
         $insert=$request->validate([
@@ -101,14 +111,14 @@ class UserController extends Controller
         $add=$request->validate([
             'v_name'=>'required',
             'image'=>'required',
-            'mess'=>'required',
+            'mass'=>'required',
             'price'=>'required',
         ]);
         if ($request->hasFile('image')) {
             $add['image']=$request->file('image')->store('logos','public');
         }
         vegetables::create($add);
-        return redirect('/')->with('message','The vegetable is already added');
+        return redirect('/add')->with('message','The vegetable is already added');
     }
 
     public function CompleteProfile(Request $request){
@@ -151,4 +161,6 @@ class UserController extends Controller
             $id->update($editaddress);
             return redirect('/adress')->with('message','Edit address successful');
     }
+
+
 }

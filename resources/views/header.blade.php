@@ -23,17 +23,24 @@
             margin: 0;
             font-size: 24px;
         }
+        header nav {
+            display: flex;
+            align-items: center;
+        }
         header nav a {
             color: white;
             text-decoration: none;
             margin-left: 20px;
             font-size: 16px;
+            display: flex;
+            align-items: center;
         }
         header nav a:hover {
             text-decoration: underline;
         }
         header form {
             margin: 0;
+            display: inline;
         }
         header form button {
             background-color: #ff5555;
@@ -42,19 +49,28 @@
             padding: 8px 12px;
             font-size: 16px;
             cursor: pointer;
+            margin-left: 20px;
+            border-radius: 5px;
         }
         header form button:hover {
             background-color: #ff3333;
         }
+        .cart-icon {
+            margin-right: 8px;
+            font-size: 18px;
+            color: white;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
         <h1><a href="/" style="color:white;">Main Page</a></h1>
         <nav>
             @auth
+                <a href="{{ route('cart') }}"><i class="fas fa-shopping-cart cart-icon"></i></a>
                 <a href="{{ route('profile',['id'=>auth()->user()->id]) }}">{{ auth()->user()->name }}</a>
-                <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit">Logout</button>
                 </form>
@@ -68,4 +84,3 @@
     @yield('content')
 </body>
 </html>
-
