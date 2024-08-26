@@ -9,5 +9,5 @@ class vegetables extends Model
 {
     use HasFactory;
 
-    protected $fillable=['v_name','image','mess','price'];
+    protected $fillable=['v_name','image','mass','price'];
 }

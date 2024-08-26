@@ -84,8 +84,9 @@ class UserController extends Controller
         $verify=User::where('email','=',Auth::user()->email);
         $getotp=$verify->get();
         if ($getotp[0]->otp === $request['otp']) {
-            $verify->update(array('otp_time'=>'1'));
-            return redirect()->route('login')->with('message','the otp is correct you can login now');
+            if ($verify->update(array('otp_time'=>'1'))) {
+                return redirect()->route('login')->with('message','the otp is correct you can login now');
+            }
         }
     }
 
@@ -96,10 +97,14 @@ class UserController extends Controller
         ]);
         if (Auth::attempt($select)) {
             $request->session()->regenerate();
-            return redirect('/')->with('message','Login successful');
+            if (Auth::user()->otp_time=='1') {
+                return redirect('/')->with('message','Login successful');
+            }else{
+                return redirect('/otp')->with('message','the otp is correct you can login now');
+            }
         }
     }
-
+    
     public function LogoutFunction(Request $request){
         Auth::logout();
         $request->session()->invalidate();

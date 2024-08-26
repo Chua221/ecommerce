@@ -65,7 +65,7 @@
 </head>
 <body>
     <header>
-        <h1><a href="/" style="color:white;">Main Page</a></h1>
+        <h1><a href="/" style="color:white;">Vegetable</a></h1>
         <nav>
             @auth
                 <a href="{{ route('cart') }}"><i class="fas fa-shopping-cart cart-icon"></i></a>
