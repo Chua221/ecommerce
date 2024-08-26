@@ -119,8 +119,8 @@
         <label for="v_name">Vegetable Name</label>
         <input type="text" name="v_name" id="v_name" placeholder="Enter Vegetable Name" required>
         
-        <label for="mass">Description</label>
-        <input type="text" name="mass" id="mass" placeholder="Enter Description" required>
+        <label for="mass">Mass(Per:kg):</label>
+        <input type="text" name="mass" id="mass" placeholder="Enter Mass" required>
         
         <label for="price">Price</label>
         <input type="text" name="price" id="price" placeholder="Enter Price" required>

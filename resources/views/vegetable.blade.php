@@ -113,7 +113,7 @@
         <label>Veg Name:</label>
         <h3>{{ $vegetable->v_name }}</h3>
 
-        <label>Veg Description:</label>
+        <label>Veg Mass(Per:kg):</label>
         <h3>{{ $vegetable->mass }}</h3>
 
         <label>Veg Price:</label>

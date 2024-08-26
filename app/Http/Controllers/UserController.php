@@ -128,7 +128,6 @@ class UserController extends Controller
 
     public function CompleteProfile(Request $request){
         $profile=$request->validate([
-            'no_ic'=>'required',
             'gender'=>'required',
         ]);
         User::where('id','=',Auth::user()->id)->update($profile);

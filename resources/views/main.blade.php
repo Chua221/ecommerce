@@ -19,7 +19,7 @@
             <tr>
                 <th>Image</th>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Mass(Per:kg)</th>
                 <th>Price</th>
                 <th colspan="2">Action</th>
             </tr>

@@ -119,10 +119,8 @@
     <form action="/profile" method="POST">
         @csrf
         <h2>Profile Information</h2>
-        <label for="no_ic">No.IC</label>
-        <input type="text" name="no_ic" placeholder="Enter Your IC Number" required>
         <label for="gender">Gender</label>
-        <select name="gender" id="gender" required>
+        <select name="gender" id="gender">
             <option value="" disabled selected>Select your gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
