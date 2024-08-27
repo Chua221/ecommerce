@@ -6,13 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Main Page')</title>
     <style>
-        /* CSS Styling for the header */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
         }
         header {
-            background-color: #333;
+            background: linear-gradient(90deg, #333, #555);
             padding: 15px 20px;
             color: white;
             display: flex;
@@ -36,14 +35,16 @@
             align-items: center;
         }
         header nav a:hover {
-            text-decoration: underline;
+            background: linear-gradient(90deg, #ff5555, #ff3333);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         header form {
             margin: 0;
             display: inline;
         }
         header form button {
-            background-color: #ff5555;
+            background: linear-gradient(90deg, #ff5555, #ff3333);
             color: white;
             border: none;
             padding: 8px 12px;
@@ -53,12 +54,25 @@
             border-radius: 5px;
         }
         header form button:hover {
-            background-color: #ff3333;
+            background: linear-gradient(90deg, #ff7777, #ff5555);
         }
         .cart-icon {
             margin-right: 8px;
             font-size: 18px;
             color: white;
+        }
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            header nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            header nav a, header form button {
+                margin: 10px 0 0 0;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -80,7 +94,6 @@
             @endauth
         </nav>
     </header>
-    <hr>
     @yield('content')
 </body>
 </html>

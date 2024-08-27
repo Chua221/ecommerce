@@ -1,3 +1,5 @@
+@extends('header')
+@section('content')
 @session('message')
     <script>
         window.alert('{{ session("message") }}')
@@ -20,7 +22,7 @@
         
         body {
             background: linear-gradient(135deg, #1e3c72, #2a5298, #3a7bd5, #00d2ff);
-            background-attachment: fixed; /* Add this line */
+            background-attachment: fixed;
             font-family: 'Arial', sans-serif;
             display: flex;
             flex-direction: column;
@@ -57,7 +59,7 @@
             text-align: center;
         }
 
-        .address-container {
+        .address-wrapper {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
@@ -65,32 +67,32 @@
             max-width: 800px;
         }
 
-        .address-box {
+        .address-card {
             background: linear-gradient(135deg, #ffffff, #e0e0e0);
             border-radius: 10px;
             padding: 15px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        .address-info {
+        .address-detail {
             margin-bottom: 10px;
             font-size: 16px;
             display: flex;
             align-items: center;
         }
 
-        .address-info label {
+        .address-detail label {
             font-weight: bold;
             margin-right: 10px;
         }
 
-        .address-actions {
+        .address-controls {
             display: flex;
             justify-content: space-between;
         }
 
-        .address-actions button[type="button"],
-        .address-actions button[type="submit"] {
+        .address-controls button[type="button"],
+        .address-controls button[type="submit"] {
             padding: 8px 12px;
             border: none;
             border-radius: 5px;
@@ -103,18 +105,18 @@
             gap: 5px;
         }
 
-        .address-actions button[type="button"] {
+        .address-controls button[type="button"] {
             background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eae4);
             color: white;
         }
 
-        .address-actions button[type="submit"] {
+        .address-controls button[type="submit"] {
             background: linear-gradient(135deg, #ff5f6d, #ffc371);
             color: white;
-            margin-top: 17px; /* 添加的行，用于将 Delete 按钮下移 */
+            margin-top: 17px;
         }
 
-        .address-actions button:hover {
+        .address-controls button:hover {
             opacity: 0.85;
         }
 
@@ -127,13 +129,12 @@
             color: white;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
-            .address-container {
+            .address-wrapper {
                 grid-template-columns: 1fr;
             }
 
-            .address-info {
+            .address-detail {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -147,34 +148,34 @@
 
     <h1><i class="fas fa-address-book"></i> Your Addresses</h1>
 
-    <div class="address-container">
+    <div class="address-wrapper">
         @foreach ($addressdata as $item)
-        <div class="address-box">
-            <div class="address-info">
+        <div class="address-card">
+            <div class="address-detail">
                 <label><i class="fas fa-home"></i> Home Name:</label>
                 <span>{{ $item['home'] }}</span>
             </div>
-            <div class="address-info">
+            <div class="address-detail">
                 <label><i class="fas fa-map-marker-alt"></i> Address 1:</label>
                 <span>{{ $item['adress1'] }}</span>
             </div>
-            <div class="address-info">
+            <div class="address-detail">
                 <label><i class="fas fa-map-pin"></i> Address 2:</label>
                 <span>{{ $item['adress2'] }}</span>
             </div>
-            <div class="address-info">
+            <div class="address-detail">
                 <label><i class="fas fa-envelope-open"></i> Postcode:</label>
                 <span>{{ $item['poscode'] }}</span>
             </div>
-            <div class="address-info">
+            <div class="address-detail">
                 <label><i class="fas fa-city"></i> City:</label>
                 <span>{{ $item['city'] }}</span>
             </div>
-            <div class="address-info">
+            <div class="address-detail">
                 <label><i class="fas fa-map-signs"></i> State:</label>
                 <span>{{ $item['state'] }}</span>
             </div>
-            <div class="address-actions">
+            <div class="address-controls">
                 <a href="{{ route('edit', $item['id']) }}">
                     <button type="button"><i class="fas fa-edit"></i> Edit</button>
                 </a>
@@ -189,3 +190,4 @@
     </div>
 </body>
 </html>
+@endsection

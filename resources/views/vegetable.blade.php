@@ -85,6 +85,24 @@
             z-index: 1;
         }
 
+        .card input[type="text"] {
+            padding: 10px;
+            border: 2px solid #ced4da;
+            border-radius: 5px;
+            width: calc(100% - 24px); /* Adjust width to fit padding */
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #495057;
+            background: #fff;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Inner shadow */
+        }
+
+        .card input[type="text"]:focus {
+            border-color: #28a745;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25); /* Focus shadow */
+        }
+
         .card button {
             padding: 10px 20px;
             border: none;
@@ -113,11 +131,14 @@
         <label>Veg Name:</label>
         <h3>{{ $vegetable->v_name }}</h3>
 
-        <label>Veg Mass(Per:kg):</label>
-        <h3>{{ $vegetable->mass }}</h3>
+        <label>Veg Mass (Per: kg):</label>
+        <input type="text" name="veg_mass" onblur="recalc()" value="{{ $vegetable->mass }}" id="1">
 
         <label>Veg Price:</label>
-        <h3>RM{{ $vegetable->price }}</h3>
+        <input type="text" onblur="recalc()" value="{{ $vegetable->price }}" id="2" readonly><br>
+
+        <label>Total Price:</label>
+        <input type="text" id="3" name="veg_price" readonly>
 
         <form action="{{ route('carts',['id'=>$vegetable->id]) }}" method="POST">
             @csrf
@@ -126,3 +147,12 @@
     </div>
 </body>
 </html>
+<script>
+    function recalc() {
+        var i1 = parseFloat(document.getElementById("1").value);
+        var i2 = parseFloat(document.getElementById("2").value);
+        i1 = isNaN(i1) ? 0 : i1;
+        i2 = isNaN(i2) ? 0 : i2;
+        document.getElementById("3").value = i1 * i2;
+    }
+</script>

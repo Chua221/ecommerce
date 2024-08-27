@@ -29,7 +29,7 @@
             <tr>
                 <td><img src="{{ $item->image ? asset("storage/".$item->image) : asset('storage/5pIFjRpbjPAtClETuLg2iAiJ2HnYLmGBvW1wbnTM.jpg') }}" alt="Image of {{ $item['v_name'] }}"></td>
                 <td>{{ $item['v_name'] }}</td>
-                <td>{{ $item['mass'] }}</td>
+                <td>{{ $item['mass'] }}kg</td>
                 <td>RM{{ $item['price'] }}</td>
                 <td class="action-column">
                     <div class="action-buttons">

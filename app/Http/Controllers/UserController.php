@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\emailverify;
 use App\Models\address;
+use App\Models\carts;
 use App\Models\User;
 use App\Models\vegetables;
 use Illuminate\Http\Request;
@@ -166,5 +167,15 @@ class UserController extends Controller
             return redirect('/adress')->with('message','Edit address successful');
     }
 
+    public function AddToCartFunction(Request $request){
+        $addtocart=$request->validate([
+            'veg_mass'=>'required',
+            'veg_price'=>'required',
+        ]);
+        $addtocart['user_id']=Auth::user()->id;
+        $addtocart['veg_id']=vegetables::where('id');
+        carts::create($addtocart);
+        return redirect('/')->with('message','Add to cart successful');
+    }   
 
 }
