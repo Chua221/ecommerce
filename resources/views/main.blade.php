@@ -26,21 +26,21 @@
         </thead>
         <tbody>
             @foreach ($showdata as $item)
-            <tr>
-                <td><img src="{{ $item->image ? asset("storage/".$item->image) : asset('storage/5pIFjRpbjPAtClETuLg2iAiJ2HnYLmGBvW1wbnTM.jpg') }}" alt="Image of {{ $item['v_name'] }}"></td>
-                <td>{{ $item['v_name'] }}</td>
-                <td>{{ $item['mass'] }}kg</td>
-                <td>RM{{ $item['price'] }}</td>
-                <td class="action-column">
-                    <div class="action-buttons">
-                        <a href="{{ route('viewveg',['id'=>$item['id']]) }}"><button type="button">View Vegetable</button></a>
-                        <form action="{{ route('carts',['id'=>$item['id']]) }}" method="POST">
-                            @csrf 
-                            <button type="button">Add to cart</button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
+                    <tr>
+                        <td><img src="{{ $item->image ? asset("storage/".$item->image) : asset('storage/5pIFjRpbjPAtClETuLg2iAiJ2HnYLmGBvW1wbnTM.jpg') }}" alt="Image of {{ $item['v_name'] }}"></td>
+                        <td>{{ $item['v_name'] }}</td>
+                        <td>{{ $item['mass'] }}kg</td>
+                        <td>RM{{ $item['price'] }}</td>
+                        <td class="action-column">
+                        <div class="action-buttons">
+                            <a href="{{ route('viewveg',['id'=>$item['id']]) }}"><button type="button">View Vegetable</button></a>
+                <form action="{{ route('carted',['id'=>$item['id']]) }}" method="POST">
+                    @csrf 
+                        <button type="submit">Add to cart</button>
+                        </div>
+                        </td>
+                    </tr>
+                </form>
             @endforeach
         </tbody>
     </table>
@@ -113,7 +113,7 @@ img:hover {
     justify-content: center;
 }
 
-button[type="button"] {
+button {
     background: linear-gradient(45deg, #007bff, #0056b3);
     padding: 10px 15px;
     border: none;
@@ -123,7 +123,7 @@ button[type="button"] {
     transition: background-color 0.3s ease;
 }
 
-button:hover[type="button"] {
+button:hover {
     background: linear-gradient(45deg, #0056b3, #003d7a);
 }
 

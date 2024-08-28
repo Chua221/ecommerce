@@ -57,7 +57,9 @@ class UserController extends Controller
     }
 
     public function ViewCart(){
-        return view('cart');
+        return view('cart',[
+            'allcart'=>carts::where('user_id','=',Auth::user()->id)->get()
+        ]);
     }
 
     public function ViewVeg($id){
@@ -167,15 +169,24 @@ class UserController extends Controller
             return redirect('/adress')->with('message','Edit address successful');
     }
 
-    public function AddToCartFunction(Request $request){
+    public function AddToCartsFunction(vegetables $id,Request $request){
         $addtocart=$request->validate([
             'veg_mass'=>'required',
             'veg_price'=>'required',
         ]);
         $addtocart['user_id']=Auth::user()->id;
-        $addtocart['veg_id']=vegetables::where('id');
+        $addtocart['veg_id']=$id->id;
         carts::create($addtocart);
         return redirect('/')->with('message','Add to cart successful');
     }   
 
+    public function AddToCartFunction(vegetables $id,Request $request){
+        carts::create([
+            'veg_mass'=>$id->mass,
+            'veg_price'=>$id->price,
+            'veg_id'=>$id->id,
+            'user_id'=>Auth::user()->id,
+        ]);
+        return redirect('/')->with('message','Add to cart successful');
+    }
 }

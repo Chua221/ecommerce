@@ -24,5 +24,6 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/adress','AddAddressFunction');
     Route::delete('/delete/{id}','DeleteFunction')->name('delete');
     Route::post('/edited/{id}','EditFunction')->name('edited');
-    Route::post('/carts/{id}','AddToCartFunction')->name('carts');
+    Route::post('/carts/{id}','AddToCartsFunction')->name('carts');
+    Route::post('/cart/{id}','AddToCartFunction')->name('carted');
 });

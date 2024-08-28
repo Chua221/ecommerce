@@ -125,23 +125,23 @@
 </head>
 <body>
     <div class="card">
-        <label>Veg Image:</label>
-        <img src="{{ $vegetable->image ? asset('storage/'.$vegetable->image) : asset('storage/5pIFjRpbjPAtClETuLg2iAiJ2HnYLmGBvW1wbnTM.jpg') }}" alt="Vegetable Image">
-
-        <label>Veg Name:</label>
-        <h3>{{ $vegetable->v_name }}</h3>
-
-        <label>Veg Mass (Per: kg):</label>
-        <input type="text" name="veg_mass" onblur="recalc()" value="{{ $vegetable->mass }}" id="1">
-
-        <label>Veg Price:</label>
-        <input type="text" onblur="recalc()" value="{{ $vegetable->price }}" id="2" readonly><br>
-
-        <label>Total Price:</label>
-        <input type="text" id="3" name="veg_price" readonly>
-
         <form action="{{ route('carts',['id'=>$vegetable->id]) }}" method="POST">
             @csrf
+            <label>Veg Image:</label>
+            <img src="{{ $vegetable->image ? asset('storage/'.$vegetable->image) : asset('storage/5pIFjRpbjPAtClETuLg2iAiJ2HnYLmGBvW1wbnTM.jpg') }}" alt="Vegetable Image">
+
+            <label>Veg Name:</label>
+            <h3>{{ $vegetable->v_name }}</h3>
+
+            <label>Veg Mass (Per: kg):</label>
+            <input type="text" name="veg_mass" onblur="recalc()" value="{{ $vegetable->mass }}" id="1">
+
+            <label>Veg Price:</label>
+            <input type="text" onblur="recalc()" value="{{ $vegetable->price }}" id="2" readonly><br>
+
+            <label>Total Price:</label>
+            <input type="text" id="3" name="veg_price" readonly>
+            
             <button type="submit">Add To Cart</button>
         </form>
     </div>
