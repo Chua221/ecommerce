@@ -14,60 +14,6 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function ViewMain(){
-        return view('main',[
-            'showdata'=>vegetables::all()
-        ]);
-    }
-
-    public function ViewLogin(){
-        return view('login');
-    }
-
-    public function ViewRegister(){
-        return view('register');
-    }
-
-    public function ViewOtp(){
-        return view('otp');
-    }
-
-    public function ViewAdd(){
-        return view('addvegetable');
-    }
-
-    public function ViewProfile(){
-        return view('profile');
-    }
-
-    public function ViewAddress(){
-        return view('address',[
-            'addressdata'=>address::where('user_id','=',Auth::user()->id)->get()
-        ]);
-    }
-
-    public function ViewAddAddress(){
-        return view('addaddress');
-    }
-
-    public function ViewEdit($id){
-        return view('editaddress',[
-        'editaddress'=>address::find($id)
-        ]);
-    }
-
-    public function ViewCart(){
-        return view('cart',[
-            'allcart'=>carts::where('user_id','=',Auth::user()->id)->get()
-        ]);
-    }
-
-    public function ViewVeg($id){
-        return view('vegetable',[
-            'vegetable'=>vegetables::find($id)
-        ]);
-    }
-
     public function RegisterFunction(Request $request){
         $otpnumber=rand(100000,999999);
         $insert=$request->validate([
@@ -90,6 +36,8 @@ class UserController extends Controller
             if ($verify->update(array('otp_time'=>'1'))) {
                 return redirect()->route('login')->with('message','the otp is correct you can login now');
             }
+        }else{
+            return redirect('otp')->with('message','the otp is wrong');
         }
     }
 
@@ -105,6 +53,8 @@ class UserController extends Controller
             }else{
                 return redirect('/otp')->with('message','the otp is correct you can login now');
             }
+        }else{
+            return redirect('/login')->with('message','email or password wrong');
         }
     }
     
@@ -170,23 +120,42 @@ class UserController extends Controller
     }
 
     public function AddToCartsFunction(vegetables $id,Request $request){
-        $addtocart=$request->validate([
-            'veg_mass'=>'required',
-            'veg_price'=>'required',
-        ]);
-        $addtocart['user_id']=Auth::user()->id;
-        $addtocart['veg_id']=$id->id;
-        carts::create($addtocart);
-        return redirect('/')->with('message','Add to cart successful');
+        if (Auth::check()) {
+            $condition=carts::where('user_id',Auth::user()->id)->where('veg_id',$id->id)->exists();
+            if (!$condition) {
+                $addtocart=$request->validate([
+                    'veg_mass'=>'required',
+                    'veg_price'=>'required',
+                ]);
+                $addtocart['user_id']=Auth::user()->id;
+                $addtocart['veg_id']=$id->id;
+                carts::create($addtocart);
+                return redirect('/')->with('message','Add to cart successful');
+            }else {
+                return redirect('/')->with('message','Cart already have this vegetable');
+            }
+        }else{
+            return redirect('/login')->with('message','You have not login yet');
+        }
     }   
 
     public function AddToCartFunction(vegetables $id,Request $request){
-        carts::create([
-            'veg_mass'=>$id->mass,
-            'veg_price'=>$id->price,
-            'veg_id'=>$id->id,
-            'user_id'=>Auth::user()->id,
-        ]);
-        return redirect('/')->with('message','Add to cart successful');
+        if (Auth::check()) {
+            $condition=carts::where('user_id',Auth::user()->id)->where('veg_id',$id->id)->exists();
+            if ($condition) {
+                return redirect('/')->with('message','Cart already have this vegetable');
+            }else {
+                carts::create([
+                    'veg_mass'=>$id->mass,
+                    'veg_price'=>$id->price,
+                    'veg_id'=>$id->id,
+                    'user_id'=>Auth::user()->id,
+                ]);
+                return redirect('/')->with('message','Add to cart successful');
+            }
+        }else{
+            return redirect('/login')->with('message','You have not login yet');
+        }
+        
     }
 }

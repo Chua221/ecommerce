@@ -34,13 +34,13 @@
                         <td class="action-column">
                         <div class="action-buttons">
                             <a href="{{ route('viewveg',['id'=>$item['id']]) }}"><button type="button">View Vegetable</button></a>
-                <form action="{{ route('carted',['id'=>$item['id']]) }}" method="POST">
-                    @csrf 
+                    <form action="{{ route('carted',['id'=>$item['id']]) }}" method="POST">
+                        @csrf 
                         <button type="submit">Add to cart</button>
+                    </form>
                         </div>
                         </td>
                     </tr>
-                </form>
             @endforeach
         </tbody>
     </table>
