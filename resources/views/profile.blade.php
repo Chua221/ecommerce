@@ -114,12 +114,25 @@
     <div class="profile-container">
         <form action="/profile" method="POST">
             @csrf
+            @php
+                //dd($data->gender);
+                $male="";
+                $female="";
+                if ($data->gender === null) {
+                }elseif ($data->gender==='Male') {
+                    $male="1";
+                }else{
+                    $female="1";
+                }
+            @endphp
             <h2>Profile Information</h2>
             <label for="gender">Gender</label>
             <select name="gender" id="gender">
-                <option value="" disabled selected>Select your gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                @if ($data->gender === null)
+                    <option disabled selected>Choose your gender</option>
+                @endif
+                <option value="Male"{{ $male?'selected':'' }} >Male</option>
+                <option value="Female" {{ $female?'selected':'' }}>Female</option>
             </select>
             <a href="{{ route('adress') }}"><button type="button">View Address</button></a>
             <button type="submit">Submit</button>

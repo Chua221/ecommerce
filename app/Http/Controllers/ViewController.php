@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\address;
 use App\Models\carts;
+use App\Models\User;
 use App\Models\vegetables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,9 @@ class ViewController extends Controller
     }
 
     public function ViewProfile(){
-        return view('profile');
+        return view('profile',[
+            'data'=>User::find(Auth::user()->id)
+        ]);
     }
 
     public function ViewAddress(){

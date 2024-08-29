@@ -85,7 +85,7 @@
             z-index: 1;
         }
 
-        .card input[type="text"] {
+        .card input {
             padding: 10px;
             border: 2px solid #ced4da;
             border-radius: 5px;
@@ -97,7 +97,7 @@
             box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Inner shadow */
         }
 
-        .card input[type="text"]:focus {
+        .card input:focus {
             border-color: #28a745;
             outline: none;
             box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25); /* Focus shadow */
@@ -134,13 +134,13 @@
             <h3>{{ $vegetable->v_name }}</h3>
 
             <label>Veg Mass (Per: kg):</label>
-            <input type="text" name="veg_mass" onblur="recalc()" value="{{ $vegetable->mass }}" id="1">
+            <input type="number" name="veg_mass" min="0.1" step="0.1" oninput="recalc()" value="{{ $vegetable->mass }}" id="1">
 
             <label>Veg Price:</label>
-            <input type="text" onblur="recalc()" value="{{ $vegetable->price }}" id="2" readonly><br>
+            <input type="text" value="{{ $vegetable->price }}" id="2" readonly><br>
 
             <label>Total Price:</label>
-            <input type="text" id="3" name="veg_price" readonly>
+            <input type="text" id="3" name="veg_price" value="{{ $vegetable->price }}" readonly>
             
             <button type="submit">Add To Cart</button>
         </form>

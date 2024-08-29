@@ -109,7 +109,6 @@
             window.alert('{{ session("message") }}');
         </script>
     @endif
-
     <form action="/login" method="POST">
         @csrf
         <h1>Login Page</h1>

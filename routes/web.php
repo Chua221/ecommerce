@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewController;
+use App\Http\Middleware\CheckUser;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(UserController::class)->group(function(){
@@ -13,9 +14,9 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/profile','CompleteProfile');
     Route::post('/adress','AddAddressFunction');
     Route::delete('/delete/{id}','DeleteFunction')->name('delete');
-    Route::post('/edited/{id}','EditFunction')->name('edited');
-    Route::post('/carts/{id}','AddToCartsFunction')->name('carts');
-    Route::post('/cart/{id}','AddToCartFunction')->name('carted');
+    Route::post('/edited/{id}','EditFunction')->name('edited')->middleware(CheckUser::class);
+    Route::post('/carts/{id}','AddToCartsFunction')->name('carts')->middleware(CheckUser::class);
+    Route::post('/cart/{id}','AddToCartFunction')->name('carted')->middleware(CheckUser::class);
 });
 
 Route::controller(ViewController::class)->group(function(){

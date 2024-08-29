@@ -120,7 +120,6 @@ class UserController extends Controller
     }
 
     public function AddToCartsFunction(vegetables $id,Request $request){
-        if (Auth::check()) {
             $condition=carts::where('user_id',Auth::user()->id)->where('veg_id',$id->id)->exists();
             if (!$condition) {
                 $addtocart=$request->validate([
@@ -134,13 +133,9 @@ class UserController extends Controller
             }else {
                 return redirect('/')->with('message','Cart already have this vegetable');
             }
-        }else{
-            return redirect('/login')->with('message','You have not login yet');
-        }
     }   
 
     public function AddToCartFunction(vegetables $id,Request $request){
-        if (Auth::check()) {
             $condition=carts::where('user_id',Auth::user()->id)->where('veg_id',$id->id)->exists();
             if ($condition) {
                 return redirect('/')->with('message','Cart already have this vegetable');
@@ -153,9 +148,5 @@ class UserController extends Controller
                 ]);
                 return redirect('/')->with('message','Add to cart successful');
             }
-        }else{
-            return redirect('/login')->with('message','You have not login yet');
-        }
-        
     }
 }
