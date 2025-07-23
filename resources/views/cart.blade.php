@@ -20,7 +20,7 @@
 
     h1 {
         text-align: center;
-        color: #5e6163; /* 与表头背景色匹配 */
+        color: #5e6163;
         margin-top: 20px;
         font-size: 2em;
         font-weight: bold;
@@ -97,10 +97,21 @@
             width: 80%;
         }
     }
+
+    .Check {
+        background-color: #ff3333;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-top: 30px;
+        margin-left: 89%;
+        cursor: pointer; /* 添加手型光标 */
+    }
 </style>
-    <h1>Your cart list</h1>
+
+<h1>Your cart list</h1>
+
 <div class="container">
-    
     <table>
         <tr>
             <th>Veg Image</th>
@@ -108,25 +119,31 @@
             <th>Veg Price</th>
         </tr>
         @foreach ($allcart as $item)
-            <tr>
-                <td class="mass"><img src="{{ asset('storage/'.$item->img->image) }}" alt="Vegetable Image"><br>{{ $item->img->v_name }}</td>
-                <td class="mass">{{ $item['veg_mass'] }}kg</td>
-                <td class="price">RM{{ $item['veg_price'] }}</td>
-            </tr>
+        <tr>
+            <td class="mass"><img src="{{ asset('storage/'.$item->img->image) }}" alt="Vegetable Image"><br>{{ $item->img->v_name }}</td>
+            <td class="mass">{{ $item['veg_mass'] }}kg</td>
+            <td class="price">RM{{ $item['veg_price'] }}</td>
+        </tr>
         @endforeach
     </table>
 
-    <div class="delivery-options">
-        <input type="radio" name="deliveryOption" value="pickup" id="pickupOption" checked onclick="toggleAddressSelect()">
-        <label for="pickupOption">Pick Up</label>
-        <input type="radio" name="deliveryOption" value="delivery" id="deliveryOption" onclick="toggleAddressSelect()">
-        <label for="deliveryOption">Delivery</label>
-        <select id="addressSelect" class="custom-select">
-            @foreach ($useraddress as $item)
-                <option value="{{ $item['adress1'] }},{{ $item['adress2'] }},{{ $item['poscode'] }},{{ $item['city'] }},{{ $item['state'] }}">{{ $item['home'] }}</option>
-            @endforeach
-        </select>
-    </div>
+    <form action="{{ route('checkout') }}" method="POST">
+        @csrf
+        <input type="text" id="totalPriceDisplay" name="total_price" value="0.00" readonly style="width: 100%; padding: 10px; font-size: 1.2em; text-align: center; border: 1px solid #ccc; border-radius: 8px; margin-top: 20px;">
+
+        <div class="delivery-options">
+            <input type="radio" name="deliveryOption" value="pickup" id="pickupOption" checked onclick="toggleAddressSelect()">
+            <label for="pickupOption">Pick Up</label>
+            <input type="radio" name="deliveryOption" value="delivery" id="deliveryOption" onclick="toggleAddressSelect()">
+            <label for="deliveryOption">Delivery</label>
+            <select id="addressSelect" class="custom-select" name="address">
+                @foreach ($useraddress as $item)
+                    <option value="{{ $item['id'] }}">{{ $item['home'] }}</option>
+                @endforeach
+            </select>
+        </div>
+        <button class="Check" type="submit">Check Out</button>
+    </form>
 </div>
 
 <script>
@@ -140,5 +157,21 @@
             addressSelect.style.display = 'none';
         }
     }
+
+    function calculateTotalPrice() {
+        let totalPrice = 0;
+
+        document.querySelectorAll('.price').forEach(function (priceElement) {
+            let price = parseFloat(priceElement.innerText.replace('RM', ''));
+            totalPrice += price;
+        });
+
+        document.getElementById('totalPriceDisplay').value =  totalPrice.toFixed(2);
+    }
+
+    window.onload = function() {
+        calculateTotalPrice();
+        toggleAddressSelect();
+    };
 </script>
 @endsection

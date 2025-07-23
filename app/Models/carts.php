@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class carts extends Model
 {
     use HasFactory;
-    protected $fillable=['veg_mass','veg_price','veg_id','user_id'];
+    protected $fillable=['veg_mass','veg_price','veg_id','user_id','status','b_id'];
 
     public function img(){
         return $this->belongsTo(vegetables::class, 'veg_id');

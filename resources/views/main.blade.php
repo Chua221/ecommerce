@@ -14,6 +14,7 @@
     <title>Main</title>
 </head>
 <body>
+    <h1>Main Page</h1>
     <table>
         <thead>
             <tr>
@@ -27,7 +28,7 @@
         <tbody>
             @foreach ($showdata as $item)
                     <tr>
-                        <td><img src="{{ $item->image ? asset("storage/".$item->image) : asset('storage/5pIFjRpbjPAtClETuLg2iAiJ2HnYLmGBvW1wbnTM.jpg') }}" alt="Image of {{ $item['v_name'] }}"></td>
+                        <td><a href="{{ route('viewveg',['id'=>$item['id']]) }}"><img src="{{ $item->image ? asset("storage/".$item->image) : asset('storage/5pIFjRpbjPAtClETuLg2iAiJ2HnYLmGBvW1wbnTM.jpg') }}" alt="Image of {{ $item['v_name'] }}"></td></a>
                         <td>{{ $item['v_name'] }}</td>
                         <td>{{ $item['mass'] }}kg</td>
                         <td>RM{{ $item['price'] }}</td>
@@ -82,6 +83,14 @@ th {
     font-weight: bold;
     font-size: 18px;
     letter-spacing: 1px;
+}
+
+h1 {
+        text-align: center;
+        color: #5e6163;
+        margin-top: 20px;
+        font-size: 2em;
+        font-weight: bold;
 }
 
 td {

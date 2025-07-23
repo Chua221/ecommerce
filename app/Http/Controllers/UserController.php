@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\emailverify;
 use App\Models\address;
 use App\Models\carts;
+use App\Models\checkout;
 use App\Models\User;
 use App\Models\vegetables;
 use Illuminate\Http\Request;
@@ -57,7 +58,28 @@ class UserController extends Controller
             return redirect('/login')->with('message','email or password wrong');
         }
     }
+
+    public function AdminLoginFunction(Request $request){
+        $credentials=$request->validate([
+            'email'=>'required|email',
+            'password'=>'required|min:6'
+        ]);
+
+            if (Auth::guard('admin')->attempt($credentials)) {
+                return redirect()->intended('/admin');
+            } else {
+                return redirect('/adminlogin')->with('message', 'Login failed');
+            }
+        
+    }
     
+    public function AdminLogoutFunction(Request $request){
+            Auth::guard('admin')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect('/adminlogin');
+    }
+
     public function LogoutFunction(Request $request){
         Auth::logout();
         $request->session()->invalidate();
@@ -77,7 +99,7 @@ class UserController extends Controller
         }
         vegetables::create($add);
         return redirect('/add')->with('message','The vegetable is already added');
-    }
+    }   
 
     public function CompleteProfile(Request $request){
         $profile=$request->validate([
@@ -90,15 +112,15 @@ class UserController extends Controller
     public function AddAddressFunction(Request $request){
         $newaddress=$request->validate([
             'home'=>'required',
-            'adress1'=>'required',
-            'adress2'=>'required',
+            'address1'=>'required',
+            'address2'=>'required',
             'poscode'=>'required|min:5',
             'city'=>'required',
             'state'=>'required',
         ]);
         $newaddress['user_id']=Auth::user()->id;
         address::create($newaddress);
-        return redirect('/adress')->with('message','New address is already create');
+        return redirect('/address')->with('message','New address is already create');
     }
 
     public function DeleteFunction(Request $request,address $id){
@@ -120,7 +142,7 @@ class UserController extends Controller
     }
 
     public function AddToCartsFunction(vegetables $id,Request $request){
-            $condition=carts::where('user_id',Auth::user()->id)->where('veg_id',$id->id)->exists();
+            $condition=carts::where('user_id',Auth::user()->id)->where('veg_id',$id->id)->where('status','cart')->exists();
             if (!$condition) {
                 $addtocart=$request->validate([
                     'veg_mass'=>'required',
@@ -128,6 +150,8 @@ class UserController extends Controller
                 ]);
                 $addtocart['user_id']=Auth::user()->id;
                 $addtocart['veg_id']=$id->id;
+                $addtocart['status']='cart';
+                $addtocart['b_id']=0;
                 carts::create($addtocart);
                 return redirect('/')->with('message','Add to cart successful');
             }else {
@@ -136,7 +160,7 @@ class UserController extends Controller
     }   
 
     public function AddToCartFunction(vegetables $id,Request $request){
-            $condition=carts::where('user_id',Auth::user()->id)->where('veg_id',$id->id)->exists();
+            $condition=carts::where('user_id',Auth::user()->id)->where('veg_id',$id->id)->where('status','cart')->exists();
             if ($condition) {
                 return redirect('/')->with('message','Cart already have this vegetable');
             }else {
@@ -145,8 +169,41 @@ class UserController extends Controller
                     'veg_price'=>$id->price,
                     'veg_id'=>$id->id,
                     'user_id'=>Auth::user()->id,
+                    'status'=>'cart',
+                    'b_id'=>0,
                 ]);
                 return redirect('/')->with('message','Add to cart successful');
             }
+    }
+
+    public function CheckOutFunction(Request $request){
+        $checkout=checkout::where('user_id', Auth::user()->id)->selectRaw('MAX(id) as id')->first();
+        if ($checkout===null) {
+            $bill_time=1;
+        }else{
+            $bill_time=$checkout->id+1;
+        }
+
+        $update_cart=carts::where('user_id',Auth::user()->id)->where('status','cart')->update([
+            'b_id'=>$bill_time,
+            'status'=>'checkout',
+        ]);
+        if ($update_cart) {
+            $insert_checkout=$request->validate([
+                'total_price'=>'required',
+                'deliveryOption'=>'required',
+                'address'=>'required_if:deliveryOption,delivery',
+            ]);
+            $insert_checkout['user_id']=Auth::user()->id;
+            $insert_checkout['bill_id']=$bill_time;
+            if ($request->deliveryOption==='pickup') {
+                $insert_checkout['address']= 0 ;
+            }elseif ($request->deliveryOption==='delivery') {
+                $insert_checkout['address']=address::where('home');
+            }
+            checkout::create($insert_checkout);
+            return redirect('/')->with('message','Checkout successful');
+        }
+            return back()->with('message','Checkout Failed');
     }
 }

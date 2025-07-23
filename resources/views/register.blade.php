@@ -101,6 +101,22 @@
                 padding: 10px;
             }
         }
+        a {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: opacity 0.3s ease;
+        }
+
+        a:hover {
+            opacity: 0.85;
+        }
     </style>
 </head>
 <body>
@@ -129,6 +145,7 @@
         <input type="password" name="password_confirmation" id="pass-confirm" placeholder="Confirm Your Password" required>
         
         <button type="submit">Register</button>
+        <a href="login">Already Have An Account</a>
     </form>
 </body>
 </html>

@@ -1,7 +1,5 @@
 @extends('header')
-
 @section('title', 'Profile')
-
 @section('content')
     <style>
         /* Scoped styles for the profile page */
@@ -110,12 +108,10 @@
             }
         }
     </style>
-
     <div class="profile-container">
         <form action="/profile" method="POST">
             @csrf
             @php
-                //dd($data->gender);
                 $male="";
                 $female="";
                 if ($data->gender === null) {
@@ -134,7 +130,8 @@
                 <option value="Male"{{ $male?'selected':'' }} >Male</option>
                 <option value="Female" {{ $female?'selected':'' }}>Female</option>
             </select>
-            <a href="{{ route('adress') }}"><button type="button">View Address</button></a>
+            <a href="{{ route('history') }}"><button type="button">View History</button></a>
+            <a href="{{ route('address') }}"><button type="button">View Address</button></a>
             <button type="submit">Submit</button>
         </form>
     </div>

@@ -1,10 +1,13 @@
 @extends('header')
+
 @section('content')
-@session('message')
+
+@if (session('message'))
     <script>
-        window.alert('{{ session("message") }}')
+        window.alert('{{ session("message") }}');
     </script>
-@endsession
+@endif
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +22,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             background: linear-gradient(135deg, #1e3c72, #2a5298, #3a7bd5, #00d2ff);
             background-attachment: fixed;
@@ -31,25 +34,7 @@
             min-height: 100vh;
             margin: 0;
             color: #333;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        a button[type="button"] {
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-            margin: 20px 0;
-        }
-
-        a button[type="button"]:hover {
-            opacity: 0.85;
+            padding-top: 70px;  
         }
 
         h1 {
@@ -129,6 +114,21 @@
             color: white;
         }
 
+        a button[type="button"] {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            margin: 20px 0;
+        }
+
+        a button[type="button"]:hover {
+            opacity: 0.85;
+        }
+
         @media (max-width: 768px) {
             .address-wrapper {
                 grid-template-columns: 1fr;
@@ -139,9 +139,20 @@
                 align-items: flex-start;
             }
         }
+
+        header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            background-color: #333; 
+            padding: 15px;
+            z-index: 1000;
+        }
+
     </style>
 </head>
 <body>
+
     <a href="{{ route('addadress', ['id' => auth()->user()->id]) }}">
         <button type="button"><i class="fas fa-plus"></i> Add New Address</button>
     </a>
@@ -157,11 +168,11 @@
             </div>
             <div class="address-detail">
                 <label><i class="fas fa-map-marker-alt"></i> Address 1:</label>
-                <span>{{ $item['adress1'] }}</span>
+                <span>{{ $item['address1'] }}</span>
             </div>
             <div class="address-detail">
                 <label><i class="fas fa-map-pin"></i> Address 2:</label>
-                <span>{{ $item['adress2'] }}</span>
+                <span>{{ $item['address2'] }}</span>
             </div>
             <div class="address-detail">
                 <label><i class="fas fa-envelope-open"></i> Postcode:</label>
@@ -188,6 +199,8 @@
         </div>
         @endforeach
     </div>
+
 </body>
 </html>
+
 @endsection

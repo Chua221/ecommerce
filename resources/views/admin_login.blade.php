@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add Address</title>
+    <title>Admin Login</title>
     <style>
         * {
             margin: 0;
@@ -31,7 +31,7 @@
             max-width: 400px;
         }
 
-        h2 {
+        h1 {
             text-align: center;
             margin-bottom: 20px;
             font-size: 28px;
@@ -49,7 +49,7 @@
             color: #333;
         }
 
-        input[type="text"], input[type="email"], input[type="password"] {
+        input[type="email"], input[type="password"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -70,7 +70,7 @@
             margin-bottom: 10px;
         }
 
-        button[type="submit"] {
+        input[type="submit"] {
             width: 100%;
             padding: 12px;
             border: none;
@@ -82,7 +82,7 @@
             transition: opacity 0.3s ease;
         }
 
-        button[type="submit"]:hover {
+        input[type="submit"]:hover {
             opacity: 0.85;
         }
 
@@ -92,11 +92,11 @@
                 padding: 15px;
             }
 
-            h2 {
+            h1 {
                 font-size: 24px;
             }
 
-            input[type="text"], input[type="email"], input[type="password"], button {
+            input[type="email"], input[type="password"], input[type="submit"] {
                 font-size: 14px;
                 padding: 10px;
             }
@@ -104,46 +104,29 @@
     </style>
 </head>
 <body>
-    <form action="/address" method="POST">
-        @csrf
-        <h2>Add Address</h2>
-        <label for="home">Home Name</label>
-        <input type="text" name="home" id="home" placeholder="Enter Your Home Name" value="{{ old('home') }}">
-        @error('home')
-            <p>{{ $message }}</p>
-        @enderror
+    @if(session('message'))
+        <script>
+            window.alert('{{ session("message") }}');
+        </script>
+    @endif
 
-        <label for="address1">Address 1</label>
-        <input type="text" name="address1" id="address1" placeholder="Enter Your Address 1" value="{{ old('address1') }}" >
-        @error('address1')
-            <p>{{ $message }}</p>
+    <form action="{{ route('adminlog') }}" method="POST">
+        @csrf
+        <h1>Admin Login Page</h1>
+
+        <label for="email">Admin Email</label>
+        <input type="email" name="email" id="email" placeholder="Enter Your Admin Email" required>
+        @error('email')
+            <p style="color:red">{{ $message }}</p>
         @enderror
         
-        <label for="address2">Address 2</label>
-        <input type="text" name="address2" id="address2" placeholder="Enter Your Address 2" value="{{ old('address2') }}">
-        @error('address2')
-            <p>{{ $message }}</p>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Enter Your Password" required>
+        @error('password')
+            <p style="color:red">{{ $message }}</p>
         @enderror
         
-        <label for="poscode">Postcode</label>
-        <input type="text" name="poscode" id="poscode" placeholder="Enter Your Postcode" value="{{ old('poscode') }}" >
-        @error('poscode')
-            <p>{{ $message }}</p>
-        @enderror
-        
-        <label for="city">City</label>
-        <input type="text" name="city" id="city" placeholder="Enter Your City" value="{{ old('city') }}" >
-        @error('city')
-            <p>{{ $message }}</p>
-        @enderror
-        
-        <label for="state">State</label>
-        <input type="text" name="state" id="state" placeholder="Enter Your State" value="{{ old('state') }}" >
-        @error('state')
-            <p>{{ $message }}</p>
-        @enderror
-        
-        <button type="submit">Submit</button>
+        <input type="submit" value="Login">
     </form>
 </body>
 </html>

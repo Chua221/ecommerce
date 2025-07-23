@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\address;
 use App\Models\carts;
+use App\Models\checkout;
 use App\Models\User;
 use App\Models\vegetables;
 use Illuminate\Http\Request;
@@ -56,10 +57,9 @@ class ViewController extends Controller
     }
 
     public function ViewCart(){
-        return view('cart',[
-            'allcart'=>carts::where('user_id','=',Auth::user()->id)->get(),
-            'useraddress'=>address::where('user_id','=',Auth::user()->id)->get(),
-        ]);
+        $allcart=carts::join('vegetables','carts.veg_id','=','vegetables.id')->where('user_id',Auth::user()->id)->where('status','cart')->get();
+        $useraddress=address::where('user_id','=',Auth::user()->id)->get();
+        return view('cart',compact('allcart','useraddress'));
     }
 
     public function ViewVeg($id){
@@ -67,4 +67,14 @@ class ViewController extends Controller
             'vegetable'=>vegetables::find($id)
         ]);
     }
+
+    public function ViewAdminLogin(){
+        return view('admin_login');
+    }
+
+    public function ViewHistory() {
+        $history = checkout::Leftjoin('addresses', 'checkouts.address', '=', 'addresses.id')->where('checkouts.user_id', Auth::user()->id)->get();
+        return view('history', compact('history'));
+    }
+    
 }

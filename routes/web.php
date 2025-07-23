@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewController;
+use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckUser;
 use Illuminate\Support\Facades\Route;
 
@@ -12,11 +13,13 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/logout','LogoutFunction')->name('logout');
     Route::post('/add','AddFunction');
     Route::post('/profile','CompleteProfile');
-    Route::post('/adress','AddAddressFunction');
+    Route::post('/address','AddAddressFunction');
     Route::delete('/delete/{id}','DeleteFunction')->name('delete');
     Route::post('/edited/{id}','EditFunction')->name('edited')->middleware(CheckUser::class);
     Route::post('/carts/{id}','AddToCartsFunction')->name('carts')->middleware(CheckUser::class);
     Route::post('/cart/{id}','AddToCartFunction')->name('carted')->middleware(CheckUser::class);
+    Route::post('/checkout','CheckOutFunction')->name('checkout');
+    Route::post('/adminlog','AdminLoginFunction')->name('adminlog');
 });
 
 Route::controller(ViewController::class)->group(function(){
@@ -26,9 +29,17 @@ Route::controller(ViewController::class)->group(function(){
     Route::get('/otp','ViewOtp');   
     Route::get('/add','ViewAdd');
     Route::get('/profile/{id}','ViewProfile')->name('profile');
-    Route::get('/adress','ViewAddress')->name('adress');
+    Route::get('/address','ViewAddress')->name('address');
     Route::get('/edit/{id}','ViewEdit')->name('edit');
     Route::get('/cart','ViewCart')->name('cart');
     Route::get('/addadress/{id}','ViewAddAddress')->name('addadress');
     Route::get('/viewveg/{id}','ViewVeg')->name('viewveg');
+    Route::get('/adminlogin','ViewAdminLogin');
+    Route::get('/history','ViewHistory')->name('history');
+});
+
+Route::middleware([CheckAdmin::class])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin');
+    });
 });

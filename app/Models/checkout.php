@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class address extends Model
+class checkout extends Model
 {
     use HasFactory;
-
-    protected $fillable=['home','user_id','address1','address2','poscode','city','state'] ;
+    protected $fillable=['user_id','total_price','bill_id','deliveryOption','address'];
 }
